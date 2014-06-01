@@ -1,9 +1,11 @@
 'use strict';
 
-/* D3 Demo */
+/***********
+ * D3 Demo *
+ ***********/
 
 /* D3: Basic Bar Graph */
-var data = [4, 8, 15, 16, 23, 42];
+var data = genUniformDataList(8, 10, 50);
 d3.select('#chart-body')
   .selectAll('div')
   .data(data)
