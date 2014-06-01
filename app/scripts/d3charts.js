@@ -21,10 +21,4 @@ var d3bargraphs = {
       .text(function(d) {return d;});
     },
 
-  vertical : function(data) {
-    d3.select('.chart')
-      .selectAll('div')
-      .data(data);
-  }
-
 };
