@@ -10,4 +10,5 @@ Repository contains implementation of basic D3 graphs
 * [D3 SVG  Gallery](http://bl.ocks.org/mbostock)
 
 ###Project Details
+* Run in development mode: `grunt serve`
 * Routes are configured with [crossroads.js](https://millermedeiros.github.io/crossroads.js/)

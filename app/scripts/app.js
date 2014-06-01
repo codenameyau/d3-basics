@@ -1,3 +1,5 @@
+/* global crossroads: true */
+/* global hasher: true */
 'use strict';
 
 /**********************
@@ -6,19 +8,19 @@
 
 // Setup crossroads
 crossroads.addRoute('graph/{name}', function(name) {
-  console.log(name);
+    console.log(name);
 });
 
 // Specify links in homepage
 crossroads.addRoute('', function() {
-  console.log('home');
-  hasher.setHash('graph/1');
+    console.log('home');
+    hasher.setHash('graph/1');
 });
 
 
 // Setup hasher
-function parseHash(newHash, oldHash){
-  crossroads.parse(newHash);
+function parseHash(newHash){
+    crossroads.parse(newHash);
 }
 
 // Run hasher
