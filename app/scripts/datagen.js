@@ -5,7 +5,6 @@
  * Data Generator Functions *
  ****************************/
 
-// Returns a list with random values
 var datagen = {
 
     uniformList : function(size, min, max) {
@@ -16,7 +15,6 @@ var datagen = {
         }
         return dataset;
     }
-
 
 };
 

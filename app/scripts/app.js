@@ -3,27 +3,27 @@
 'use strict';
 
 /**********************
- * Crossroads Routing *
+ * App Routing Config *
  **********************/
 
-// Setup crossroads
+// Route: Graphs
 crossroads.addRoute('graph/{name}', function(name) {
     console.log(name);
 });
 
-// Specify links in homepage
+// Route: Home
 crossroads.addRoute('', function() {
     console.log('home');
     hasher.setHash('graph/1');
 });
 
 
-// Setup hasher
+// Setup hasher to parse hashes in url
 function parseHash(newHash){
     crossroads.parse(newHash);
 }
 
-// Run hasher
+// Initialize and run hasher
 hasher.initialized.add(parseHash); //parse initial hash
 hasher.changed.add(parseHash); //parse hash changes
 hasher.init(); //start listening for history change
