@@ -5,6 +5,7 @@
 /*-------------------------------*/
 'use strict';
 
+
 var d3graphs = {
 
   /* D3: Horizontal Bar Graph */
