@@ -43,6 +43,7 @@ var GRAPHS = {
  **********************/
 function clearChartBody() {
   d3.select('#chart-body').html('');
+  d3.select('#chart-header').html('');
 }
 
 function parseHash(newHash) {
@@ -55,8 +56,10 @@ function parseHash(newHash) {
  **********************/
 // Route: Graphs
 crossroads.addRoute('graph/{name}', function(name) {
-  document.title = GRAPHS[name].description;
+  var graphTitle = GRAPHS[name].description;
+  document.title = graphTitle;
   clearChartBody();
+  d3.select('#chart-header').text(graphTitle);
   GRAPHS[name].call();
 });
 
