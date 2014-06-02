@@ -15,12 +15,18 @@
 var GRAPHS = {
 
   'horizontal-bargraph': {
-    'description': 'Simple HTML horizontal bargraph',
+    'description': 'HTML Horizontal Bargraph',
     call : function() {
       d3graphs.horizontalBargraph(datagen.uniformList(8, 10, 50));
     }
   },
 
+  'vertical-bargraph': {
+    'description': 'HTML Vertical Bargraph',
+    call : function() {
+      d3graphs.verticalBargraph(datagen.uniformList(5, 10, 50));
+    }
+  },
 
 };
 
@@ -43,18 +49,20 @@ function parseHash(newHash) {
 
 // Route: Graphs
 crossroads.addRoute('graph/{name}', function(name) {
+  document.title = GRAPHS[name].description;
   clearChartBody();
   GRAPHS[name].call();
 });
 
 // Route: Home
 crossroads.addRoute('', function() {
+  document.title = 'D3 Basics';
   clearChartBody();
   // Construct links
   for (var graph in GRAPHS) {
     d3.select('.chart')
       .append('div')
-      .classed({'chart-link' : true})
+      .attr('class', 'chart-link')
       .append('a')
       .attr('href', '#/graph/' + graph)
       .text(GRAPHS[graph].description);
