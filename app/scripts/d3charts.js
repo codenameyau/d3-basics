@@ -57,24 +57,25 @@ var d3graphs = {
   /* D3: SVG Bar Graph */
   svgBargraph : function(data) {
     var width  = 500,
-        height = 20;
+        height = 30;
     var scale = getScale(data, width);
     var chart = d3.select('.chart')
+      .append('svg')
       .attr('width', width)
       .attr('height', height * data.length);
     var bar = chart.selectAll('g').data(data)
       .enter().append('g')
-      .attr('transform', function(d, i) {return 'translate(0,' + i*height + ')';});
+      .attr('transform', function(d, i) {return 'translate(0,'+ (height+5)*i +')';});
     bar.append('rect')
       .attr('width', scale)
       .attr('height', height-1)
-      .style('fill', '#2c9e6c');
+      .attr('fill', '#2c9e6c');
     bar.append('text')
-      .attr('x', function(d) { return scale(d) - 3; })
+      .attr('x', function(d) { return scale(d) - 8; })
       .attr('y', height / 2)
       .attr('dy', '.35em')
-      .style('fill', '#fafafa')
-      .style('text-anchor', 'end')
+      .attr('fill', '#fafafa')
+      .attr('text-anchor', 'end')
       .text(function(d) { return d; });
 
   },

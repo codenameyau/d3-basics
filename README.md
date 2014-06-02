@@ -15,4 +15,5 @@ state and history are handled using [hasher.js](https://github.com/millermedeiro
 * [D3 SVG  Gallery](http://bl.ocks.org/mbostock)
 
 ###Development
+* Install packages: `bower install && npm install`
 * Run in development mode: `grunt serve`

@@ -29,7 +29,7 @@ var GRAPHS = {
   },
 
   'svg-bargraph' : {
-    'description': 'SVG Bargraph',
+    'description': 'SVG Horizontal Bargraph',
     call : function() {
       d3graphs.svgBargraph(datagen.uniformList(8, 10, 50));
     }
@@ -74,7 +74,6 @@ crossroads.addRoute('', function() {
       .text(GRAPHS[graph].description);
   }
 });
-
 
 
 /****************************
