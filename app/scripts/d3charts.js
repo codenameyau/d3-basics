@@ -9,7 +9,7 @@
 var d3graphs = {
 
   /* D3: Horizontal Bar Graph */
-  horizontal : function(data) {
+  horizontalBargraph : function(data) {
     var calcWidth = d3.scale.linear()
       .domain([0, d3.max(data)])
       .range([0, 500]);

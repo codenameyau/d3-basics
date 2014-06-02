@@ -14,10 +14,13 @@
  *********************/
 var GRAPHS = {
 
-  'horizontal' : {
-    'description' : 'Simple Horizontal Bargraph',
-    'function' : d3graphs.horizontal
+  'horizontal-bargraph': {
+    'description': 'Simple HTML horizontal bargraph',
+    call : function() {
+      d3graphs.horizontalBargraph(datagen.uniformList(8, 10, 50));
+    }
   },
+
 
 };
 
@@ -41,8 +44,7 @@ function parseHash(newHash) {
 // Route: Graphs
 crossroads.addRoute('graph/{name}', function(name) {
   clearChartBody();
-  var dataset = datagen.uniformList(8, 10, 50);
-  d3graphs.horizontal(dataset);
+  GRAPHS[name].call();
 });
 
 // Route: Home
@@ -52,6 +54,7 @@ crossroads.addRoute('', function() {
   for (var graph in GRAPHS) {
     d3.select('.chart')
       .append('div')
+      .classed({'chart-link' : true})
       .append('a')
       .attr('href', '#/graph/' + graph)
       .text(GRAPHS[graph].description);
@@ -60,7 +63,9 @@ crossroads.addRoute('', function() {
 
 
 
-// Initialize and run hasher
+/****************************
+ * Initialize Browser State *
+ ****************************/
 hasher.initialized.add(parseHash); //parse initial hash
 hasher.changed.add(parseHash); //parse hash changes
 hasher.init(); //start listening for history change
