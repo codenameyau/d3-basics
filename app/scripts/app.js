@@ -24,7 +24,7 @@ var GRAPHS = {
   'vertical-bargraph': {
     'description': 'HTML Vertical Bargraph',
     call : function() {
-      d3graphs.verticalBargraph(datagen.uniformList(5, 10, 50));
+      d3graphs.verticalBargraph(datagen.uniformList(14, 10, 50));
     }
   },
 
