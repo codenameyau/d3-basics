@@ -1,9 +1,9 @@
 d3-basics
 =========
-Single-page client-side web application with basic D3 graphs
+Single-page web application with basic D3 graphs
 
 ###Web Interface Details
-The web interface is built as single page application without MVC framework
+The web interface is built as single page application without an MVC framework
 for the purpose of learning the core JavaScript language. Routes are configured using
 [crossroads.js](https://millermedeiros.github.io/crossroads.js/), while browser
 state and history are handled using [hasher.js](https://github.com/millermedeiros/hasher/).
@@ -16,4 +16,3 @@ state and history are handled using [hasher.js](https://github.com/millermedeiro
 
 ###Development
 * Run in development mode: `grunt serve`
-

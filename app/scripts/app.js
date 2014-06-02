@@ -28,6 +28,13 @@ var GRAPHS = {
     }
   },
 
+  'svg-bargraph' : {
+    'description': 'SVG Bargraph',
+    call : function() {
+      d3graphs.svgBargraph(datagen.uniformList(8, 10, 50));
+    }
+  }
+
 };
 
 
@@ -46,7 +53,6 @@ function parseHash(newHash) {
 /**********************
  * App Routing Config *
  **********************/
-
 // Route: Graphs
 crossroads.addRoute('graph/{name}', function(name) {
   document.title = GRAPHS[name].description;

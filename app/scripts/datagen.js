@@ -5,6 +5,9 @@
 'use strict';
 
 
+/********************
+ * Exported Objects *
+ ********************/
 var datagen = {
 
   uniformList : function(size, min, max) {

@@ -15,6 +15,10 @@ function getScale(data, maxPixelSize) {
     .range([0, maxPixelSize]);
 }
 
+
+/********************
+ * Exported Objects *
+ ********************/
 var d3graphs = {
 
   /* D3: Horizontal Bar Graph */
@@ -48,6 +52,31 @@ var d3graphs = {
       .style('color', '#fafafa')
       .style('height', function(d) {return calcScale(d) + 'px';})
       .text(function(d) {return d;});
+  },
+
+  /* D3: SVG Bar Graph */
+  svgBargraph : function(data) {
+    var width  = 500,
+        height = 20;
+    var scale = getScale(data, width);
+    var chart = d3.select('.chart')
+      .attr('width', width)
+      .attr('height', height * data.length);
+    var bar = chart.selectAll('g').data(data)
+      .enter().append('g')
+      .attr('transform', function(d, i) {return 'translate(0,' + i*height + ')';});
+    bar.append('rect')
+      .attr('width', scale)
+      .attr('height', height-1)
+      .style('fill', '#2c9e6c');
+    bar.append('text')
+      .attr('x', function(d) { return scale(d) - 3; })
+      .attr('y', height / 2)
+      .attr('dy', '.35em')
+      .style('fill', '#fafafa')
+      .style('text-anchor', 'end')
+      .text(function(d) { return d; });
+
   },
 
 };
