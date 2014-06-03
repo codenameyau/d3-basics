@@ -33,7 +33,16 @@ var GRAPHS = {
     call : function() {
       d3graphs.svgBargraph(datagen.uniformList(8, 10, 50));
     }
-  }
+  },
+
+  'svg-bargraph-real' : {
+    'description': 'SVG Bargraph with Final Exams',
+    call : function() {
+      d3.csv('../data/finalexams.csv', function(error, data) {
+        d3graphs.svgBargraph(data);
+      });
+    }
+  },
 
 };
 

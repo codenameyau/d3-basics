@@ -65,7 +65,9 @@ var d3graphs = {
       .attr('height', height * data.length);
     var bar = chart.selectAll('g').data(data)
       .enter().append('g')
-      .attr('transform', function(d, i) {return 'translate(0,'+ (height+5)*i +')';});
+      .attr('transform', function(d, i) {
+        return 'translate(0,'+ (height+5)*i +')';
+      });
     bar.append('rect')
       .attr('width', scale)
       .attr('height', height-1)
@@ -77,7 +79,6 @@ var d3graphs = {
       .attr('fill', '#fafafa')
       .attr('text-anchor', 'end')
       .text(function(d) { return d; });
-
   },
 
 };
