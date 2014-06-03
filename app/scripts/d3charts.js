@@ -9,9 +9,9 @@
 /**********************
  * Internal Functions *
  **********************/
-function getScale(max, maxPixelSize) {
+function getScale(maxValue, maxPixelSize) {
   return d3.scale.linear()
-    .domain([0, max])
+    .domain([0, maxValue])
     .range([0, maxPixelSize]);
 }
 
@@ -23,12 +23,12 @@ var d3graphs = {
 
   /* D3: Horizontal Bar Graph */
   horizontalBargraph : function(data) {
-    var calcScale = getScale(d3.max(data), 600);
+    var scale = getScale(d3.max(data), 600);
     d3.select('.chart')
       .selectAll('div')
       .data(data)
       .enter().append('div')
-      .style('width', function(d) {return calcScale(d) + 'px';})
+      .style('width', function(d) {return scale(d) + 'px';})
       .style('background-color', '#4372c2')
       .style('color', '#fafafa')
       .style('margin', '5px 5px')
@@ -39,7 +39,7 @@ var d3graphs = {
 
   /* D3: Vertical Bar Graph */
   verticalBargraph : function(data) {
-    var calcScale = getScale(d3.max(data), 300);
+    var scale = getScale(d3.max(data), 300);
     d3.select('.chart')
       .selectAll('div')
       .data(data)
@@ -50,39 +50,50 @@ var d3graphs = {
       .style('background-color', 'teal')
       .style('margin', '5px 5px')
       .style('color', '#fafafa')
-      .style('height', function(d) {return calcScale(d) + 'px';})
+      .style('height', function(d) {return scale(d) + 'px';})
       .text(function(d) {return d;});
   },
 
   /*
    * D3: SVG Bar Graph
    * data  : List of Objects
-   * label : {'x', 'y', 'yMax'}
+   * label : {'xLabel', 'yLabel', 'yMax'}
    */
   svgBargraph : function(data, label) {
     var width  = 500,
         height = 30;
+    var xLabel = label.x,
+        yLabel = label.y;
     var scale = getScale(label.yMax, width);
     var chart = d3.select('.chart')
       .append('svg')
       .attr('width', width)
       .attr('height', height * data.length);
+
+    // Create SVG rectangles for each data point
     var bar = chart.selectAll('g').data(data)
       .enter().append('g')
       .attr('transform', function(d, i) {
         return 'translate(0,'+ (height+5)*i +')';
       });
     bar.append('rect')
-      .attr('width', scale)
+      .attr('width', function(d) {
+        return scale(+d[yLabel]);
+      })
       .attr('height', height-1)
       .attr('fill', '#2c9e6c');
     bar.append('text')
-      .attr('x', function(d) { return scale(d) - 8; })
+      .attr('x', function(d) {
+        var yVal = +d[yLabel];
+        return scale(yVal) - 8;
+      })
       .attr('y', height / 2)
       .attr('dy', '.35em')
       .attr('fill', '#fafafa')
       .attr('text-anchor', 'end')
-      .text(function(d) { return d; });
+      .text(function(d) {
+        return d[xLabel];
+      });
   },
 
 };
