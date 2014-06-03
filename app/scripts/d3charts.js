@@ -9,9 +9,9 @@
 /**********************
  * Internal Functions *
  **********************/
-function getScale(data, maxPixelSize) {
+function getScale(max, maxPixelSize) {
   return d3.scale.linear()
-    .domain([0, d3.max(data)])
+    .domain([0, max])
     .range([0, maxPixelSize]);
 }
 
@@ -23,7 +23,7 @@ var d3graphs = {
 
   /* D3: Horizontal Bar Graph */
   horizontalBargraph : function(data) {
-    var calcScale = getScale(data, 600);
+    var calcScale = getScale(d3.max(data), 600);
     d3.select('.chart')
       .selectAll('div')
       .data(data)
@@ -39,7 +39,7 @@ var d3graphs = {
 
   /* D3: Vertical Bar Graph */
   verticalBargraph : function(data) {
-    var calcScale = getScale(data, 300);
+    var calcScale = getScale(d3.max(data), 300);
     d3.select('.chart')
       .selectAll('div')
       .data(data)
@@ -54,11 +54,15 @@ var d3graphs = {
       .text(function(d) {return d;});
   },
 
-  /* D3: SVG Bar Graph */
-  svgBargraph : function(data) {
+  /*
+   * D3: SVG Bar Graph
+   * data  : List of Objects
+   * label : {'x', 'y', 'yMax'}
+   */
+  svgBargraph : function(data, label) {
     var width  = 500,
         height = 30;
-    var scale = getScale(data, width);
+    var scale = getScale(label.yMax, width);
     var chart = d3.select('.chart')
       .append('svg')
       .attr('width', width)

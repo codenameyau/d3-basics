@@ -39,7 +39,8 @@ var GRAPHS = {
     'description': 'SVG Bargraph with Final Exams',
     call : function() {
       d3.csv('../data/finalexams.csv', function(error, data) {
-        d3graphs.svgBargraph(data);
+        var label = {'x': 'name', 'y': 'score', 'yMax': 100};
+        d3graphs.svgBargraph(data, label);
       });
     }
   },
