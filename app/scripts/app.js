@@ -32,7 +32,7 @@ var GRAPHS = {
     'description': 'SVG Horizontal Bargraph with Exam Scores',
     call : function() {
       d3.csv('../data/finalexams.csv', function(error, data) {
-        var label = {'x': 'name', 'y': 'score', 'yMax': 100, 'sort': 'asc'};
+        var label = {'x': 'name', 'y': 'score', 'yMax': 100, 'sort': 'desc'};
         d3graphs.svgBargraph(data, label);
       });
     }

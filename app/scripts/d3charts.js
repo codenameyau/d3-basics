@@ -9,10 +9,25 @@
 /**********************
  * Internal Functions *
  **********************/
+// Internal: getScale(Int, Int) -> Function
 function getScale(maxValue, maxPixelSize) {
   return d3.scale.linear()
     .domain([0, maxValue])
     .range([0, maxPixelSize]);
+}
+
+// Internal: sortData(List, String, String) -> List
+function sortData(data, comp, order) {
+  if (order === 'asc') {
+    return data.sort(function(a, b) {
+      return parseFloat(a[comp]) - parseFloat(b[comp]);
+    });
+  }
+  else if (order === 'desc') {
+    return data.sort(function(a, b) {
+      return parseFloat(b[comp]) - parseFloat(a[comp]);
+    });
+  }
 }
 
 /********************
@@ -53,33 +68,18 @@ var d3graphs = {
       .text(function(d) {return d;});
   },
 
-  /*
-   * D3: SVG Bar Graph
-   * data  : List of Objects
-   * label : {'xLabel', 'yLabel', 'yMax', 'sort'}
-   * - sort can be either ['asc', 'desc']
-   */
+  /* D3: SVG Bar Graph */
   svgBargraph : function(data, label) {
+    // Parse args and label
     var sorted = label.sort || false;
-
-    // Parse label
     var width  = 600,
         height = 30;
     var xLabel = label.x,
         yLabel = label.y;
 
-    // Sort values in data
+    // Sort data
     if (sorted) {
-      if (sorted === 'asc') {
-        data.sort(function(a, b) {
-          return parseFloat(a[yLabel]) - parseFloat(b[yLabel]);
-        });
-      }
-      else if (sorted === 'desc') {
-        data.sort(function(a, b) {
-          return parseFloat(b[yLabel]) - parseFloat(a[yLabel]);
-        });
-      }
+      sortData(data, yLabel, sorted);
     }
 
     // Settings for scale and chart size
