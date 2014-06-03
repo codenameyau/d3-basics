@@ -64,16 +64,22 @@ var d3graphs = {
 
     // Parse label
     var width  = 600,
-        height = 35;
+        height = 30;
     var xLabel = label.x,
         yLabel = label.y;
 
     // Sort values in data
     if (sorted) {
-      var sortedData = data.sort(function(a, b) {
-        return parseFloat(a.yLabel) - parseFloat(b.yLabel);
-      });
-      console.log(sortedData);
+      if (sorted === 'asc') {
+        data.sort(function(a, b) {
+          return parseFloat(a[yLabel]) - parseFloat(b[yLabel]);
+        });
+      }
+      else if (sorted === 'desc') {
+        data.sort(function(a, b) {
+          return parseFloat(b[yLabel]) - parseFloat(a[yLabel]);
+        });
+      }
     }
 
     // Settings for scale and chart size
