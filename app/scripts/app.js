@@ -28,18 +28,11 @@ var GRAPHS = {
     }
   },
 
-  'svg-bargraph' : {
-    'description': 'SVG Horizontal Bargraph',
-    call : function() {
-      d3graphs.svgBargraph(datagen.uniformList(8, 10, 50));
-    }
-  },
-
   'svg-bargraph-real' : {
-    'description': 'SVG Bargraph with Final Exams',
+    'description': 'SVG Bargraph with Exam Scores',
     call : function() {
       d3.csv('../data/finalexams.csv', function(error, data) {
-        var label = {'x': 'name', 'y': 'score', 'yMax': 100};
+        var label = {'x': 'name', 'y': 'score', 'yMax': 100, 'sort': true};
         d3graphs.svgBargraph(data, label);
       });
     }

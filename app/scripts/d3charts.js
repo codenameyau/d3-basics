@@ -57,24 +57,25 @@ var d3graphs = {
   /*
    * D3: SVG Bar Graph
    * data  : List of Objects
-   * label : {'xLabel', 'yLabel', 'yMax'}
+   * label : {'xLabel', 'yLabel', 'yMax', 'sort'}
+   * - sort can be either [false, 'asc', 'desc']
    */
   svgBargraph : function(data, label) {
-    var width  = 500,
-        height = 30;
+    var width  = 600,
+        height = 35;
     var xLabel = label.x,
         yLabel = label.y;
     var scale = getScale(label.yMax, width);
     var chart = d3.select('.chart')
       .append('svg')
       .attr('width', width)
-      .attr('height', height * data.length);
+      .attr('height', height * data.length + height*2);
 
     // Create SVG rectangles for each data point
     var bar = chart.selectAll('g').data(data)
       .enter().append('g')
       .attr('transform', function(d, i) {
-        return 'translate(0,'+ (height+5)*i +')';
+        return 'translate(0,'+ (height+2)*i +')';
       });
     bar.append('rect')
       .attr('width', function(d) {
@@ -83,17 +84,21 @@ var d3graphs = {
       .attr('height', height-1)
       .attr('fill', '#2c9e6c');
     bar.append('text')
+      .attr('x', 10)
+      .attr('y', height / 2)
+      .attr('dy', '.30em')
+      .attr('fill', '#fafafa')
+      .attr('text-anchor', 'start')
+      .text(function(d) {return d[xLabel];});
+    bar.append('text')
       .attr('x', function(d) {
-        var yVal = +d[yLabel];
-        return scale(yVal) - 8;
+        return scale(d[yLabel])-8;
       })
       .attr('y', height / 2)
-      .attr('dy', '.35em')
+      .attr('dy', '.30em')
       .attr('fill', '#fafafa')
       .attr('text-anchor', 'end')
-      .text(function(d) {
-        return d[xLabel];
-      });
+      .text(function(d) {return parseInt(d[yLabel], 10);});
   },
 
 };
