@@ -15,7 +15,6 @@ function getScale(maxValue, maxPixelSize) {
     .range([0, maxPixelSize]);
 }
 
-
 /********************
  * Exported Objects *
  ********************/
@@ -58,13 +57,26 @@ var d3graphs = {
    * D3: SVG Bar Graph
    * data  : List of Objects
    * label : {'xLabel', 'yLabel', 'yMax', 'sort'}
-   * - sort can be either [false, 'asc', 'desc']
+   * - sort can be either ['asc', 'desc']
    */
   svgBargraph : function(data, label) {
+    var sorted = label.sort || false;
+
+    // Parse label
     var width  = 600,
         height = 35;
     var xLabel = label.x,
         yLabel = label.y;
+
+    // Sort values in data
+    if (sorted) {
+      var sortedData = data.sort(function(a, b) {
+        return parseFloat(a.yLabel) - parseFloat(b.yLabel);
+      });
+      console.log(sortedData);
+    }
+
+    // Settings for scale and chart size
     var scale = getScale(label.yMax, width);
     var chart = d3.select('.chart')
       .append('svg')
@@ -78,9 +90,7 @@ var d3graphs = {
         return 'translate(0,'+ (height+2)*i +')';
       });
     bar.append('rect')
-      .attr('width', function(d) {
-        return scale(+d[yLabel]);
-      })
+      .attr('width', function(d) {return scale(+d[yLabel]);})
       .attr('height', height-1)
       .attr('fill', '#2c9e6c');
     bar.append('text')
@@ -91,9 +101,7 @@ var d3graphs = {
       .attr('text-anchor', 'start')
       .text(function(d) {return d[xLabel];});
     bar.append('text')
-      .attr('x', function(d) {
-        return scale(d[yLabel])-8;
-      })
+      .attr('x', function(d) {return scale(d[yLabel])-8;})
       .attr('y', height / 2)
       .attr('dy', '.30em')
       .attr('fill', '#fafafa')

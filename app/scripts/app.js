@@ -29,10 +29,10 @@ var GRAPHS = {
   },
 
   'svg-bargraph-real' : {
-    'description': 'SVG Bargraph with Exam Scores',
+    'description': 'SVG Horizontal Bargraph with Exam Scores',
     call : function() {
       d3.csv('../data/finalexams.csv', function(error, data) {
-        var label = {'x': 'name', 'y': 'score', 'yMax': 100, 'sort': true};
+        var label = {'x': 'name', 'y': 'score', 'yMax': 100, 'sort': 'desc'};
         d3graphs.svgBargraph(data, label);
       });
     }
