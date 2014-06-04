@@ -53,7 +53,7 @@ var d3graphs = {
 
   /* D3: Vertical Bar Graph */
   verticalBargraph : function(data) {
-    var scale = getScale(d3.max(data), 300);
+    var scale = getScale(d3.max(data), 400);
     d3.select('.chart')
       .selectAll('div')
       .data(data)
@@ -72,7 +72,7 @@ var d3graphs = {
   svgBargraph : function(data, label) {
     // Parse args and label
     var sorted = label.sort || false;
-    var width  = 600,
+    var width  = 800,
         height = 30;
     var xLabel = label.x,
         yLabel = label.y;
@@ -116,8 +116,9 @@ var d3graphs = {
   },
 
   svgAxisBargraph : function(data, label) {
-    var width  = 800,
-        height = 500;
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    var width  = 940 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
     var xLabel = label.x,
         yLabel = label.y;
 
@@ -125,8 +126,9 @@ var d3graphs = {
     var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1),
         y = d3.scale.linear().range([height, 0]);
     var chart = d3.select('.chart')
-      .attr('width', width)
-      .attr('height', height);
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom);
 
     // Get the x values through iteration (i.e. letters)
     x.domain(data.map(function(d) { return d[xLabel]; }));
@@ -145,9 +147,9 @@ var d3graphs = {
       .attr('height', height)
       .attr('width', x.rangeBand());
     bar.append('text')
-      .attr('x', x.rangeBand() / 2)
-      .attr('y', function(d) { return y(d[yLabel]) + 5; })
-      .attr('dy', '.5em')
+      .attr('x', x.rangeBand() / 2 - 20)
+      .attr('y', function(d) { return y(d[yLabel]) + 3; })
+      .attr('dy', '-10px')
       .text(function(d) { return d[yLabel]; });
   },
 

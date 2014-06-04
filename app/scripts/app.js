@@ -15,16 +15,16 @@
 var GRAPHS = {
 
   'horizontal-bargraph': {
-    'description': 'HTML Horizontal Bargraph',
+    'description': 'HTML Randomized Horizontal Bargraph',
     call : function() {
-      d3graphs.horizontalBargraph(datagen.uniformList(8, 10, 50));
+      d3graphs.horizontalBargraph(datagen.uniformList(10, 10, 50));
     }
   },
 
   'vertical-bargraph': {
-    'description': 'HTML Vertical Bargraph',
+    'description': 'HTML Randomized Vertical Bargraph',
     call : function() {
-      d3graphs.verticalBargraph(datagen.uniformList(14, 10, 50));
+      d3graphs.verticalBargraph(datagen.uniformList(15, 10, 50));
     }
   },
 
