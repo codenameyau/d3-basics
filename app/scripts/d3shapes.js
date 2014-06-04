@@ -25,14 +25,24 @@ var d3shapes = {
     figure.append('circle')
       .style('stroke', '#8c8c8c')
       .style('fill', '#ffffff')
+      .style('cursor', 'pointer')
       .attr('r', 50)
       .attr('cx', 60)
       .attr('cy', 60)
       .on('mouseover', function() {
-        d3.select(this).style('fill', '#d5f8ff');
+        d3.select(this).style('fill', '#e5f8ff');
       })
       .on('mouseout', function() {
         d3.select(this).style('fill', '#ffffff');
+      })
+      .on('click', function(){
+        d3.select(this)
+        .transition()
+          .duration(1000)
+          .attr('r', 10)
+        .transition()
+          .delay(800)
+          .attr('r', 50);
       });
   },
 
