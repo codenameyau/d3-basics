@@ -10,13 +10,16 @@
  ********************/
 var datagen = {
 
+  genRandomNum : function(min, max) {
+    return Math.floor(Math.random() * (max-min) + min);
+  },
+
   uniformList : function(size, min, max) {
     var dataset = [];
     for (var i = 0; i < size; i++) {
-      var value = Math.floor(Math.random() * (max-min) + min);
-      dataset.push(value);
+      dataset.push(this.genRandomNum(min, max));
     }
     return dataset;
-  }
+  },
 
 };

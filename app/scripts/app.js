@@ -52,7 +52,8 @@ var GRAPHS = {
   'svg-shapes' : {
     'description': 'SVG Shapes and Events',
     call : function() {
-      d3shapes.svgBasicShapes();
+      var data = datagen.uniformList(5, 20, 60);
+      d3shapes.svgBasicShapes(data);
     }
   },
 
