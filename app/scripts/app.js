@@ -28,12 +28,22 @@ var GRAPHS = {
     }
   },
 
-  'svg-bargraph-real' : {
-    'description': 'SVG Horizontal Bargraph with Exam Scores',
+  'svg-bargraph-exam' : {
+    'description': 'SVG Bargraph with CSV Exam Scores',
     call : function() {
       d3.csv('../data/finalexams.csv', function(error, data) {
         var label = {'x': 'name', 'y': 'score', 'yMax': 100, 'sort': 'desc'};
         d3graphs.svgBargraph(data, label);
+      });
+    }
+  },
+
+  'svg-bargraph-frequency' : {
+    'description': 'SVG Bargraph with Frequency of Letters',
+    call : function() {
+      d3.csv('../data/letterfreq.csv', function(error, data) {
+        var label = {'x': 'letter', 'y': 'frequency'};
+        d3graphs.svgAxisBargraph(data, label);
       });
     }
   },

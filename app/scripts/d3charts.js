@@ -115,4 +115,16 @@ var d3graphs = {
       .text(function(d) {return parseInt(d[yLabel], 10);});
   },
 
+  svgAxisBargraph : function(data, label) {
+    var width  = 800,
+        height = 500;
+
+    // Ordinal for comparing values by rank, intervals
+    var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1),
+        y = d3.scale.linear().range([height, 0]);
+    var chart = d3.select('.chart')
+      .attr('width', width)
+      .attr('height', height);
+  },
+
 };
