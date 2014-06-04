@@ -117,7 +117,7 @@ var d3graphs = {
   },
 
   svgAxisBargraph : function(data, label) {
-    var margin = {top: 20, right: 20, bottom: 30, left: 40};
+    var margin = {top: 20, right: 20, bottom: 30, left: 50};
     var width  = 900 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     var xLabel = label.x,
@@ -131,7 +131,8 @@ var d3graphs = {
         .orient('bottom');
     var yAxis = d3.svg.axis()
         .scale(y)
-        .orient('left');
+        .orient('left')
+        .ticks(10, '%');
     var chart = d3.select('.chart')
       .append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -143,14 +144,31 @@ var d3graphs = {
     x.domain(data.map(function(d) { return d[xLabel]; }));
     y.domain([0, d3.max(data, function(d) { return d[yLabel]; })]);
 
-    // Add x and y axis
+    // Add x-axis
     chart.append('g')
       .attr('class', 'axis')
       .attr('transform', 'translate(0, ' + height + ')')
-      .call(xAxis);
+      .call(xAxis)
+      .append('text')
+        .attr('x', width / 2)
+        .attr('y', margin.bottom)
+        .style('font', '12px san-serif')
+        .style('fill', '#282828')
+        .text(xLabel)
+        .style('text-transform', 'capitalize');
+
+    // Add y-axis
     chart.append('g')
       .attr('class', 'axis')
-      .call(yAxis);
+      .call(yAxis)
+      .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -height/2)
+        .attr('y', -margin.left+10)
+        .style('font', '12px san-serif')
+        .style('fill', '#282828')
+        .text(yLabel)
+        .style('text-transform', 'capitalize');
 
     // Create bar chart
     chart.selectAll('.bar')
