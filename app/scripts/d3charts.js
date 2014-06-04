@@ -129,7 +129,26 @@ var d3graphs = {
       .attr('height', height);
 
     // Get the x values through iteration (i.e. letters)
-    x.domain(d3.map(function(d) { return d[xLabel]; }));
+    x.domain(data.map(function(d) { return d[xLabel]; }));
+    y.domain([0, d3.max(data, function(d) { return d[yLabel]; })]);
+
+    // Create bar chart
+    var bar = chart.selectAll('g')
+      .data(data).enter()
+      .append('g')
+      .attr('transform', function(d) {
+        return 'translate(' + x(d[xLabel]) + ', 0)';
+      });
+    bar.append('rect')
+      .attr('y', function(d) { return y(d[yLabel]); })
+      .attr('fill', '#4372c2')
+      .attr('height', height)
+      .attr('width', x.rangeBand());
+    bar.append('text')
+      .attr('x', x.rangeBand() / 2)
+      .attr('y', function(d) { return y(d[yLabel]) + 5; })
+      .attr('dy', '.5em')
+      .text(function(d) { return d[yLabel]; });
   },
 
 };
