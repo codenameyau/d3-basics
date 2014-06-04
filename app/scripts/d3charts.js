@@ -213,7 +213,7 @@ var d3graphs = {
       .innerRadius(0);
     var pie = d3.layout.pie()
       .sort(null)
-      .value(function(d) { return d[yLabel] });
+      .value(function(d) { return d[yLabel]; });
 
     var figure = d3.select('.chart')
       .append('svg')
@@ -222,8 +222,17 @@ var d3graphs = {
       .append('g')
         .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
 
-
-
+    var piece = figure.selectAll('g')
+      .data(pie(data)).enter()
+      .append('g')
+        .style('stroke', '#ffffff');
+    piece.append('path')
+      .attr('d', arc)
+      .style('fill', function(d) { return colors(d[xLabel]); });
+    piece.append('text')
+      .attr('transform', function(d) { return 'translate('+ arc.centroid(d) + ');'; })
+      .style('text-anchor', 'middle')
+      .text(function(d) { return d[yLabel]; });
   },
 
 };
