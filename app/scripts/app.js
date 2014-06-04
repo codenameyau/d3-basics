@@ -4,6 +4,7 @@
 /* global hasher                 */
 /* global d3                     */
 /* global d3graphs               */
+/* global d3shapes               */
 /* global datagen                */
 /*-------------------------------*/
 'use strict';
