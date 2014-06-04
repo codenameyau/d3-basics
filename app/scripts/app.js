@@ -57,6 +57,15 @@ var GRAPHS = {
     }
   },
 
+  'svg-piechart-frequency' : {
+    'description': 'SVG Pie Chart with Frequency of Letters',
+    call : function() {
+      d3.csv('../data/letterfreq.csv', function(error, data) {
+        var label = {'x': 'letter', 'y': 'frequency'};
+        d3graphs.svgPieChart(data, label);
+      });
+    }
+  },
 
 };
 

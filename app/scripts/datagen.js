@@ -22,4 +22,12 @@ var datagen = {
     return dataset;
   },
 
+  getColors : function(size) {
+    var colors = [];
+    for (var i = 0; i < size; i++) {
+      colors.push('#d3432c');
+    }
+    return colors;
+  }
+
 };

@@ -1,6 +1,7 @@
 /*-------JSHint Directives-------*/
 /* jshint indent: 2              */
 /* global d3                     */
+/* global datagen                */
 /* exported d3graphs             */
 /*-------------------------------*/
 'use strict';
@@ -196,6 +197,33 @@ var d3graphs = {
         .attr('fill', '#4372c2')
         .attr('height', function(d) { return height-y(d[yLabel]); })
         .attr('width', x.rangeBand());
+  },
+
+  svgPieChart : function(data, label) {
+    var xLabel = label.x,
+        yLabel = label.y,
+        width  = 500,
+        height = 500;
+    var radius = Math.min(width, height) / 2;
+    var colors = d3.scale.ordinal()
+      .range(datagen.getColors(data.length));
+
+    var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
+    var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d[yLabel] });
+
+    var figure = d3.select('.chart')
+      .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+      .append('g')
+        .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
+
+
+
   },
 
 };
