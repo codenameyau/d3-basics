@@ -241,12 +241,6 @@ var d3graphs = {
       .on('mouseout', function(d) {
         d3.select(this).style('fill', colors(d[xLabel]));
       });
-
-    // piece.append('text')
-    //   .text(function(d) { return d.data[yLabel]; })
-    //   .attr('transform', function(d) { return 'translate('+ arc.centroid(d) + ');'; })
-    //   .attr('dy', '.35em')
-    //   .style('text-anchor', 'middle');
   },
 
 };

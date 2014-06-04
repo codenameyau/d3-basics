@@ -1,5 +1,6 @@
 /*-------JSHint Directives-------*/
 /* jshint indent: 2              */
+/* global d3                     */
 /* exported datagen              */
 /*-------------------------------*/
 'use strict';
@@ -10,10 +11,12 @@
  ********************/
 var datagen = {
 
+  // genRandomNum(Int, Int) -> Int
   genRandomNum : function(min, max) {
-    return Math.floor(Math.random() * (max-min) + min);
+    return Math.round(Math.random() * (max-min) + min);
   },
 
+  // uniformList(Int, Int, Int) -> Array
   uniformList : function(size, min, max) {
     var dataset = [];
     for (var i = 0; i < size; i++) {
@@ -22,10 +25,16 @@ var datagen = {
     return dataset;
   },
 
+  // getColors(Int) -> Array
   getColors : function(size) {
+    var baseColor = '#8A56E2',
+        rgbColor = d3.rgb(baseColor),
+        hslColor = d3.hsl(rgbColor);
     var colors = [];
     for (var i = 0; i < size; i++) {
-      colors.push('#d3432c');
+      var tempHue = Math.round((hslColor.h + (360 / size)*i) % 360);
+      var newColor = d3.hsl(tempHue, hslColor.s, hslColor.l).toString();
+      colors.push(newColor);
     }
     return colors;
   }
