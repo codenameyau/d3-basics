@@ -42,13 +42,13 @@ var d3graphs = {
       .selectAll('div')
       .data(data)
       .enter().append('div')
-      .style('width', function(d) {return scale(d) + 'px';})
+      .style('width', function(d) { return scale(d) + 'px'; })
       .style('background-color', '#4372c2')
       .style('color', '#fafafa')
       .style('margin', '5px 5px')
       .style('padding', '5px 10px')
       .style('text-align', 'right')
-      .text(function(d) {return d;});
+      .text(function(d) { return d; });
   },
 
   /* D3: Vertical Bar Graph */
@@ -64,8 +64,8 @@ var d3graphs = {
       .style('background-color', 'teal')
       .style('margin', '5px 5px')
       .style('color', '#fafafa')
-      .style('height', function(d) {return scale(d) + 'px';})
-      .text(function(d) {return d;});
+      .style('height', function(d) { return scale(d) + 'px'; })
+      .text(function(d) { return d; });
   },
 
   /* D3: SVG Bar Graph */
@@ -96,7 +96,7 @@ var d3graphs = {
         return 'translate(0,'+ (height+2)*i +')';
       });
     bar.append('rect')
-      .attr('width', function(d) {return scale(+d[yLabel]);})
+      .attr('width', function(d) { return scale(+d[yLabel]); })
       .attr('height', height-1)
       .attr('fill', '#2c9e6c');
     bar.append('text')
@@ -105,19 +105,21 @@ var d3graphs = {
       .attr('dy', '.30em')
       .attr('fill', '#fafafa')
       .attr('text-anchor', 'start')
-      .text(function(d) {return d[xLabel];});
+      .text(function(d) { return d[xLabel]; });
     bar.append('text')
-      .attr('x', function(d) {return scale(d[yLabel])-8;})
+      .attr('x', function(d) { return scale(d[yLabel])-8; })
       .attr('y', height / 2)
       .attr('dy', '.30em')
       .attr('fill', '#fafafa')
       .attr('text-anchor', 'end')
-      .text(function(d) {return parseInt(d[yLabel], 10);});
+      .text(function(d) { return parseInt(d[yLabel], 10); });
   },
 
   svgAxisBargraph : function(data, label) {
     var width  = 800,
         height = 500;
+    var xLabel = label.x,
+        yLabel = label.y;
 
     // Ordinal for comparing values by rank, intervals
     var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1),
@@ -125,6 +127,9 @@ var d3graphs = {
     var chart = d3.select('.chart')
       .attr('width', width)
       .attr('height', height);
+
+    // Get the x values through iteration (i.e. letters)
+    x.domain(d3.map(function(d) { return d[xLabel]; }));
   },
 
 };
