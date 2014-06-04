@@ -26,9 +26,9 @@ var datagen = {
   },
 
   // getColors(Int) -> Array
-  getColors : function(size) {
-    var baseColor = '#8A56E2',
-        rgbColor = d3.rgb(baseColor),
+  getColors : function(size, baseColor) {
+    baseColor = baseColor || '#E89A74';
+    var rgbColor = d3.rgb(baseColor),
         hslColor = d3.hsl(rgbColor);
     var colors = [];
     for (var i = 0; i < size; i++) {

@@ -204,17 +204,20 @@ var d3graphs = {
         yLabel = label.y,
         width  = 500,
         height = 500;
-    var hoverColor = '#4c5cec';
+
+    // Compute pie color and radius
+    var basePieColor = '#E89A74',
+        hoverColor   = '#32A9E3';
     var radius = Math.min(width, height) / 2;
     var colors = d3.scale.ordinal()
-      .range(datagen.getColors(data.length));
+      .range(datagen.getColors(data.length, basePieColor));
 
     // Sort data desc
     sortData(data, yLabel, 'desc');
 
     // Define arc and pie
     var arc = d3.svg.arc()
-      .outerRadius(radius - 10)
+      .outerRadius(radius-20)
       .innerRadius(0);
     var pie = d3.layout.pie()
       .value(function(d) { return d[yLabel]; });
@@ -234,12 +237,12 @@ var d3graphs = {
         .style('stroke', '#ffffff');
     piece.append('path')
       .attr('d', arc)
-      .style('fill', function(d) { return colors(d[xLabel]); })
+      .style('fill', function(d) { return colors(d.data[xLabel]); })
       .on('mouseover', function() {
         d3.select(this).style('fill', hoverColor);
       })
       .on('mouseout', function(d) {
-        d3.select(this).style('fill', colors(d[xLabel]));
+        d3.select(this).style('fill', colors(d.data[xLabel]));
       });
   },
 
