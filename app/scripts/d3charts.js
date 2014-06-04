@@ -121,7 +121,13 @@ var d3graphs = {
     var width  = 900 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     var xLabel = label.x,
-        yLabel = label.y;
+        yLabel = label.y,
+        sorted = label.sort;
+
+    // Sort data
+    if (sorted) {
+      sortData(data, yLabel, sorted);
+    }
 
     // Ordinal for comparing values by rank, intervals
     var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.15),

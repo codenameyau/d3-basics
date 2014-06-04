@@ -42,7 +42,7 @@ var GRAPHS = {
     'description': 'SVG Bargraph with Frequency of Letters',
     call : function() {
       d3.csv('../data/letterfreq.csv', function(error, data) {
-        var label = {'x': 'letter', 'y': 'frequency'};
+        var label = {'x': 'letter', 'y': 'frequency', 'sort': 'desc'};
         d3graphs.svgAxisBargraph(data, label);
       });
     }
