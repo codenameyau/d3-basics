@@ -116,23 +116,40 @@ var d3graphs = {
   },
 
   svgAxisBargraph : function(data, label) {
-    var margin = {top: 20, right: 20, bottom: 20, left: 20};
-    var width  = 940 - margin.left - margin.right,
+    var margin = {top: 20, right: 20, bottom: 30, left: 40};
+    var width  = 900 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     var xLabel = label.x,
         yLabel = label.y;
 
     // Ordinal for comparing values by rank, intervals
-    var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1),
+    var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.15),
         y = d3.scale.linear().range([height, 0]);
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient('bottom');
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
     var chart = d3.select('.chart')
       .append('svg')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom);
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // Get the x values through iteration (i.e. letters)
     x.domain(data.map(function(d) { return d[xLabel]; }));
     y.domain([0, d3.max(data, function(d) { return d[yLabel]; })]);
+
+    // Add x and y axis
+    chart.append('g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(0, ' + height + ')')
+      .call(xAxis);
+    chart.append('g')
+      .attr('class', 'axis')
+      .call(yAxis);
 
     // Create bar chart
     var bar = chart.selectAll('g')
@@ -141,6 +158,7 @@ var d3graphs = {
       .attr('transform', function(d) {
         return 'translate(' + x(d[xLabel]) + ', 0)';
       });
+
     bar.append('rect')
       .attr('y', function(d) { return y(d[yLabel]); })
       .attr('fill', '#4372c2')
@@ -150,6 +168,8 @@ var d3graphs = {
       .attr('x', x.rangeBand() / 2 - 20)
       .attr('y', function(d) { return y(d[yLabel]) + 3; })
       .attr('dy', '-10px')
+      .attr('fill', '#7c7c7c')
+      .style('font', '11px sans-serif')
       .text(function(d) { return d[yLabel]; });
   },
 
