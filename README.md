@@ -10,6 +10,7 @@ state and history are handled using [hasher.js](https://github.com/millermedeiro
 
 ###Learning Resources
 * [Scott Murray Online D3 Tutorials](http://alignedleft.com/tutorials/d3)
+* [Try D3 Now](http://christopheviau.com/d3_tutorial/)
 * [1000 D3 Examples and Demos](http://techslides.com/over-1000-d3-js-examples-and-demos/)
 * [2000 D3 Examples and Demos](http://techslides.com/over-2000-d3-js-examples-and-demos/)
 * [D3 SVG  Gallery](http://bl.ocks.org/mbostock)

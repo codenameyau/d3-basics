@@ -48,6 +48,13 @@ var GRAPHS = {
     }
   },
 
+  'svg-shapes' : {
+    'description': 'SVG Shapes and Events',
+    call : function() {
+      d3shapes.svgBasicShapes();
+    }
+  },
+
 };
 
 
