@@ -50,9 +50,9 @@ var GRAPHS = {
   },
 
   'svg-shapes' : {
-    'description': 'SVG Shapes and Events',
+    'description': 'SVG Randomized Circles with Hover',
     call : function() {
-      var data = datagen.uniformList(5, 20, 60);
+      var data = datagen.uniformList(10, 35, 90);
       d3shapes.svgBasicShapes(data);
     }
   },
