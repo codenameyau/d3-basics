@@ -29,6 +29,14 @@ var GRAPHS = {
     }
   },
 
+  'svg-shapes' : {
+    'description': 'SVG Randomized Circles with Hover',
+    call : function() {
+      var data = datagen.uniformList(10, 35, 90);
+      d3shapes.svgBasicShapes(data);
+    }
+  },
+
   'svg-bargraph-exam' : {
     'description': 'SVG Bargraph with CSV Exam Scores',
     call : function() {
@@ -49,13 +57,6 @@ var GRAPHS = {
     }
   },
 
-  'svg-shapes' : {
-    'description': 'SVG Randomized Circles with Hover',
-    call : function() {
-      var data = datagen.uniformList(10, 35, 90);
-      d3shapes.svgBasicShapes(data);
-    }
-  },
 
 };
 

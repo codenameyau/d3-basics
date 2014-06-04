@@ -76,6 +76,8 @@ var d3graphs = {
         height = 30;
     var xLabel = label.x,
         yLabel = label.y;
+    var barColor   = '#2c9e6c',
+        hoverColor = '#a14f41';
 
     // Sort data
     if (sorted) {
@@ -99,7 +101,15 @@ var d3graphs = {
     bar.append('rect')
         .attr('width', function(d) { return scale(+d[yLabel]); })
         .attr('height', height-1)
-        .attr('fill', '#2c9e6c');
+        .attr('fill', barColor)
+        .on('mouseover', function() {
+          d3.select(this)
+            .style('fill', hoverColor);
+        })
+        .on('mouseout', function() {
+          d3.select(this)
+            .style('fill', barColor);
+        });
     bar.append('text')
         .attr('x', 10)
         .attr('y', height / 2)
