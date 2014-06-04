@@ -204,17 +204,22 @@ var d3graphs = {
         yLabel = label.y,
         width  = 500,
         height = 500;
+    var hoverColor = '#4c5cec';
     var radius = Math.min(width, height) / 2;
     var colors = d3.scale.ordinal()
       .range(datagen.getColors(data.length));
 
+    // Sort data desc
+    sortData(data, yLabel, 'desc');
+
+    // Define arc and pie
     var arc = d3.svg.arc()
       .outerRadius(radius - 10)
       .innerRadius(0);
     var pie = d3.layout.pie()
-      .sort(null)
       .value(function(d) { return d[yLabel]; });
 
+    // Create chart
     var figure = d3.select('.chart')
       .append('svg')
         .attr('width', width)
@@ -222,17 +227,26 @@ var d3graphs = {
       .append('g')
         .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
 
+    // Add each piece of pie chart
     var piece = figure.selectAll('g')
       .data(pie(data)).enter()
       .append('g')
         .style('stroke', '#ffffff');
     piece.append('path')
       .attr('d', arc)
-      .style('fill', function(d) { return colors(d[xLabel]); });
-    piece.append('text')
-      .attr('transform', function(d) { return 'translate('+ arc.centroid(d) + ');'; })
-      .style('text-anchor', 'middle')
-      .text(function(d) { return d[yLabel]; });
+      .style('fill', function(d) { return colors(d[xLabel]); })
+      .on('mouseover', function() {
+        d3.select(this).style('fill', hoverColor);
+      })
+      .on('mouseout', function(d) {
+        d3.select(this).style('fill', colors(d[xLabel]));
+      });
+
+    // piece.append('text')
+    //   .text(function(d) { return d.data[yLabel]; })
+    //   .attr('transform', function(d) { return 'translate('+ arc.centroid(d) + ');'; })
+    //   .attr('dy', '.35em')
+    //   .style('text-anchor', 'middle');
   },
 
 };
