@@ -40,15 +40,15 @@ var d3graphs = {
     var scale = getScale(d3.max(data), 600);
     d3.select('.chart')
       .selectAll('div')
-      .data(data)
-      .enter().append('div')
-      .style('width', function(d) { return scale(d) + 'px'; })
-      .style('background-color', '#4372c2')
-      .style('color', '#fafafa')
-      .style('margin', '5px 5px')
-      .style('padding', '5px 10px')
-      .style('text-align', 'right')
-      .text(function(d) { return d; });
+      .data(data).enter()
+      .append('div')
+        .style('width', function(d) { return scale(d) + 'px'; })
+        .style('background-color', '#4372c2')
+        .style('color', '#fafafa')
+        .style('margin', '5px 5px')
+        .style('padding', '5px 10px')
+        .style('text-align', 'right')
+        .text(function(d) { return d; });
   },
 
   /* D3: Vertical Bar Graph */
@@ -56,16 +56,16 @@ var d3graphs = {
     var scale = getScale(d3.max(data), 400);
     d3.select('.chart')
       .selectAll('div')
-      .data(data)
-      .enter().append('div')
-      .style('display', 'inline-block')
-      .style('vertical-align', 'bottom')
-      .style('padding', '5px 10px')
-      .style('background-color', 'teal')
-      .style('margin', '5px 5px')
-      .style('color', '#fafafa')
-      .style('height', function(d) { return scale(d) + 'px'; })
-      .text(function(d) { return d; });
+      .data(data).enter()
+      .append('div')
+        .style('display', 'inline-block')
+        .style('vertical-align', 'bottom')
+        .style('padding', '5px 10px')
+        .style('background-color', 'teal')
+        .style('margin', '5px 5px')
+        .style('color', '#fafafa')
+        .style('height', function(d) { return scale(d) + 'px'; })
+        .text(function(d) { return d; });
   },
 
   /* D3: SVG Bar Graph */
@@ -86,33 +86,34 @@ var d3graphs = {
     var scale = getScale(label.yMax, width);
     var chart = d3.select('.chart')
       .append('svg')
-      .attr('width', width)
-      .attr('height', height * data.length + height*2);
+        .attr('width', width)
+        .attr('height', height * data.length + height*2);
 
     // Create SVG rectangles for each data point
-    var bar = chart.selectAll('g').data(data)
-      .enter().append('g')
-      .attr('transform', function(d, i) {
-        return 'translate(0,'+ (height+2)*i +')';
-      });
+    var bar = chart.selectAll('g')
+      .data(data).enter()
+      .append('g')
+        .attr('transform', function(d, i) {
+          return 'translate(0,'+ (height+2)*i +')';
+        });
     bar.append('rect')
-      .attr('width', function(d) { return scale(+d[yLabel]); })
-      .attr('height', height-1)
-      .attr('fill', '#2c9e6c');
+        .attr('width', function(d) { return scale(+d[yLabel]); })
+        .attr('height', height-1)
+        .attr('fill', '#2c9e6c');
     bar.append('text')
-      .attr('x', 10)
-      .attr('y', height / 2)
-      .attr('dy', '.30em')
-      .attr('fill', '#fafafa')
-      .attr('text-anchor', 'start')
-      .text(function(d) { return d[xLabel]; });
+        .attr('x', 10)
+        .attr('y', height / 2)
+        .attr('dy', '.30em')
+        .attr('fill', '#fafafa')
+        .attr('text-anchor', 'start')
+        .text(function(d) { return d[xLabel]; });
     bar.append('text')
-      .attr('x', function(d) { return scale(d[yLabel])-8; })
-      .attr('y', height / 2)
-      .attr('dy', '.30em')
-      .attr('fill', '#fafafa')
-      .attr('text-anchor', 'end')
-      .text(function(d) { return parseInt(d[yLabel], 10); });
+        .attr('x', function(d) { return scale(d[yLabel])-8; })
+        .attr('y', height / 2)
+        .attr('dy', '.30em')
+        .attr('fill', '#fafafa')
+        .attr('text-anchor', 'end')
+        .text(function(d) { return parseInt(d[yLabel], 10); });
   },
 
   svgAxisBargraph : function(data, label) {
@@ -133,10 +134,10 @@ var d3graphs = {
         .orient('left');
     var chart = d3.select('.chart')
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // Get the x values through iteration (i.e. letters)
     x.domain(data.map(function(d) { return d[xLabel]; }));
@@ -152,25 +153,15 @@ var d3graphs = {
       .call(yAxis);
 
     // Create bar chart
-    var bar = chart.selectAll('g')
+    chart.selectAll('.bar')
       .data(data).enter()
-      .append('g')
-      .attr('transform', function(d) {
-        return 'translate(' + x(d[xLabel]) + ', 0)';
-      });
-
-    bar.append('rect')
-      .attr('y', function(d) { return y(d[yLabel]); })
-      .attr('fill', '#4372c2')
-      .attr('height', height)
-      .attr('width', x.rangeBand());
-    bar.append('text')
-      .attr('x', x.rangeBand() / 2 - 20)
-      .attr('y', function(d) { return y(d[yLabel]) + 3; })
-      .attr('dy', '-10px')
-      .attr('fill', '#7c7c7c')
-      .style('font', '11px sans-serif')
-      .text(function(d) { return d[yLabel]; });
+      .append('rect')
+        .attr('class', 'bar')
+        .attr('x', function(d) { return x(d[xLabel]); })
+        .attr('y', function(d) { return y(d[yLabel]); })
+        .attr('fill', '#4372c2')
+        .attr('height', function(d) { return height-y(d[yLabel]); })
+        .attr('width', x.rangeBand());
   },
 
 };
