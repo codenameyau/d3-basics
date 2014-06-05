@@ -67,6 +67,16 @@ var GRAPHS = {
     }
   },
 
+  'scatter-plot-height-weight' : {
+    'description': 'Scatter Plot of Women\'s Height vs Weight',
+    call : function() {
+      d3.csv('../data/women-height-weight.csv', function(error, data) {
+        var label = {'x': 'height', 'y': 'weight'};
+        d3graphs.scatterPlot(data, label);
+      });
+    }
+  },
+
 };
 
 

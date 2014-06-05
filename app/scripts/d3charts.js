@@ -269,4 +269,25 @@ var d3graphs = {
 
   },
 
+  scatterPlot : function(data, label) {
+    var margin = {top: 20, right: 20, bottom:20, left: 40};
+    var width  = 800,
+        height = 500;
+    var xLabel = label.x,
+        yLabel = label.y;
+    var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.20),
+        y = d3.scale.linear().range([height, 0]);
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient('bottom');
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+    var chart = d3.select('.chart')
+      .append('svg')
+      .attr('width', width + margin.right + margin.left)
+      .attr('height', height + margin.top + margin.bottom);
+  },
+
 };
