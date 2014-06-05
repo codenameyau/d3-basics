@@ -200,7 +200,7 @@ var d3graphs = {
   },
 
   svgPieChart : function(data, label) {
-    var margin = {top: 20, bottom: 20, left: 200, right: 300};
+    var margin = {top: 20, bottom: 20, left: 200, right: 350};
     var xLabel = label.x,
         yLabel = label.y,
         width  = 900,
@@ -208,7 +208,7 @@ var d3graphs = {
 
     // Compute pie color and radius
     var basePieColor = '#E89A74',
-        hoverColor   = '#32A9E3';
+        strokeColor  = '#4D63E2';
     var radius = Math.min(width, height) / 2;
     var colors = d3.scale.ordinal()
       .range(datagen.getColors(data.length, basePieColor));
@@ -239,33 +239,33 @@ var d3graphs = {
     piece.append('path')
       .attr('d', arc)
       .style('fill', function(d) { return colors(d.data[xLabel]); })
-      .on('mouseover', function(d) {
-        d3.select(this).style('fill', hoverColor);
+      .on('mouseenter', function(d) {
+        d3.select(this).style('stroke', strokeColor);
         d3.select('.legendColor')
           .style('fill', colors(d.data[xLabel]));
         d3.select('.legendText')
-          .text('hello');
+          .text(xLabel + ': ' + d.data[xLabel] + ' | ' + yLabel + ': ' + d.data[yLabel]);
       })
-      .on('mouseout', function(d) {
-        d3.select(this).style('fill', colors(d.data[xLabel]));
+      .on('mouseleave', function() {
+        d3.select(this).style('stroke', '#ffffff');
       });
 
     // Create legend
-    var legWidth  = 150,
-        legHeight = 50;
-    var legend = figure.append('g');
+    var legBoxSize = 20;
+    var legend = figure.append('g')
+      .attr('transform', 'translate(' + (width-margin.right) + ',' + (height/2) + ')');
     legend.append('rect')
         .attr('class', 'legendColor')
-        .attr('width', legWidth)
-        .attr('height', legHeight)
+        .attr('width', legBoxSize)
+        .attr('height', legBoxSize)
         .style('fill', '#fafafa')
-        .style('stroke', '#3c3c3c')
-        .style('opacity', 0.8)
-        .attr('transform', 'translate(' + margin.right + ',' + (-legHeight/2) + ')');
+        .style('stroke', '#3c3c3c');
     legend.append('text')
       .attr('class', 'legendText')
-      .style('fill', '#5c5c5c')
-      .attr('text-anchor', 'start');
+      .attr('transform', 'translate(' + (legBoxSize+10) + ',' + (legBoxSize-5) + ')')
+      .style('fill', '#676767')
+      .style('text-transform', 'capitalize')
+      .text('Hover to View');
 
   },
 
