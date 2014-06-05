@@ -70,8 +70,8 @@ var d3shapes = {
         height  = 600,
         radius  = Math.sqrt(Math.pow(width, 2)/4 + Math.pow(height,2)/4);
 
-    var numColors = 20,
-        colors = datagen.getColors(numColors, '#ce2a2e'),
+    var numColors = 30,
+        colors = datagen.getColors(numColors, '#eb5c4c', 360),
         randColor = colors[datagen.genRandomNum(0, numColors-1)];
 
     var spacing = 5,
@@ -100,7 +100,7 @@ var d3shapes = {
       .enter().append('path')
         .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
         .style('fill', '#fafafa')
-        .style('stroke', '#222222')
+        .style('stroke', '#5e5e5e')
         .on('mouseover', function() {
           d3.select(this).style('fill', randColor);
         });
