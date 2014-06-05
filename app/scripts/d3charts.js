@@ -272,9 +272,11 @@ var d3graphs = {
   scatterPlot : function(data, label) {
     var margin = {top: 20, right: 20, bottom:20, left: 40};
     var width  = 800,
-        height = 500;
+        height = 400;
     var xLabel = label.x,
         yLabel = label.y;
+
+    // Create scale and axis
     var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.20),
         y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis()
@@ -284,10 +286,54 @@ var d3graphs = {
         .scale(y)
         .orient('left');
 
+    // Get the x and y values through iteration
+    x.domain(data.map(function(d) { return d[xLabel]; }));
+    y.domain([0, d3.max(data, function(d) { return d[yLabel]; })]);
+
     var chart = d3.select('.chart')
       .append('svg')
-      .attr('width', width + margin.right + margin.left)
-      .attr('height', height + margin.top + margin.bottom);
+        .attr('width', width + margin.right + margin.left)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    // Add x-axis
+    chart.append('g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(0, ' + height + ')')
+      .call(xAxis)
+      .append('text')
+        .attr('x', width-20)
+        .attr('y', margin.bottom)
+        .style('font', '12px san-serif')
+        .style('fill', '#282828')
+        .text(xLabel)
+        .style('text-transform', 'capitalize');
+
+    // Add y-axis
+    chart.append('g')
+      .attr('class', 'axis')
+      .call(yAxis)
+      .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -height/2)
+        .attr('y', -margin.left+10)
+        .style('font', '12px san-serif')
+        .style('fill', '#282828')
+        .text(yLabel)
+        .style('text-transform', 'capitalize');
+
+    chart.append('g')
+      .selectAll('g')
+      .data(data).enter()
+        .append('g')
+          .append('circle')
+          .style('stroke', '#5c5c5c')
+          .style('fill', '#c35487')
+          .attr('r', 4)
+          .attr('cx', function(d) { return x(d[xLabel])+margin.left/2; })
+          .attr('cy', function(d) { return y(d[yLabel]); });
+
   },
 
 };
