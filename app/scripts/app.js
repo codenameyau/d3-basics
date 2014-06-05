@@ -77,6 +77,13 @@ var GRAPHS = {
     }
   },
 
+  'svg-voronoi' : {
+    'description': 'Voronoi Geometry with Phyllotaxis Arrangement',
+    call : function() {
+      d3shapes.svgVoronoi();
+    }
+  },
+
 };
 
 

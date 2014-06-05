@@ -42,7 +42,7 @@ var d3shapes = {
         .style('fill', '#ffffff')
         .style('cursor', 'pointer')
         .attr('r', function(d) { return d; })
-      .on('mouseover', function() {
+      .on('mouseenter', function() {
         d3.select(this)
           .style('fill', hoverColor)
           .transition()
@@ -52,7 +52,7 @@ var d3shapes = {
             .delay(800)
             .attr('r', function(d) { return d; });
       })
-      .on('mouseout', function() {
+      .on('mouseleave', function() {
         d3.select(this)
           .style('fill', '#ffffff');
       });
@@ -62,6 +62,48 @@ var d3shapes = {
       .style('stroke', strokeColor)
       .style('cursor', 'pointer')
       .attr('text-anchor', 'middle');
+
+  },
+
+  svgVoronoi  : function() {
+    var width   = 900,
+        height  = 600,
+        radius  = Math.sqrt(Math.pow(width, 2)/4 + Math.pow(height,2)/4);
+
+    var numColors = 20,
+        colors = datagen.getColors(numColors, '#ce2a2e'),
+        randColor = colors[datagen.genRandomNum(0, numColors-1)];
+
+    var spacing = 5,
+        theta   = Math.PI * (3 - Math.sqrt(5)),
+        total   = (radius * radius) / (spacing * spacing);
+
+    var voronoi = d3.geom.voronoi()
+        .clipExtent([[-1, -1], [width + 1, height + 1]]);
+
+    var svg = d3.select('.chart')
+      .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+    svg.selectAll('path')
+      .data(voronoi(d3.range(total)
+        .map(function(index) {
+          var radius = spacing * Math.sqrt(index),
+              angle  = index * theta;
+          return [
+            width / 2  + radius * Math.cos(angle),
+            height / 2 + radius * Math.sin(angle)
+          ];
+        }))
+        .filter(function(d) { return d.length; }))
+      .enter().append('path')
+        .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+        .style('fill', '#fafafa')
+        .style('stroke', '#222222')
+        .on('mouseover', function() {
+          d3.select(this).style('fill', randColor);
+        });
 
   },
 
