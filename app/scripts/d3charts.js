@@ -200,9 +200,10 @@ var d3graphs = {
   },
 
   svgPieChart : function(data, label) {
+    var margin = {top: 20, bottom: 20, left: 200, right: 300};
     var xLabel = label.x,
         yLabel = label.y,
-        width  = 500,
+        width  = 900,
         height = 500;
 
     // Compute pie color and radius
@@ -226,24 +227,46 @@ var d3graphs = {
     var figure = d3.select('.chart')
       .append('svg')
         .attr('width', width)
-        .attr('height', height)
-      .append('g')
-        .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
+        .attr('height', height);
 
     // Add each piece of pie chart
-    var piece = figure.selectAll('g')
+    var piece = figure.append('g')
+      .attr('transform', 'translate(' + (width-margin.right)/2 + ',' + height/2 + ')')
+      .selectAll('g')
       .data(pie(data)).enter()
       .append('g')
         .style('stroke', '#ffffff');
     piece.append('path')
       .attr('d', arc)
       .style('fill', function(d) { return colors(d.data[xLabel]); })
-      .on('mouseover', function() {
+      .on('mouseover', function(d) {
         d3.select(this).style('fill', hoverColor);
+        d3.select('.legendColor')
+          .style('fill', colors(d.data[xLabel]));
+        d3.select('.legendText')
+          .text('hello');
       })
       .on('mouseout', function(d) {
         d3.select(this).style('fill', colors(d.data[xLabel]));
       });
+
+    // Create legend
+    var legWidth  = 150,
+        legHeight = 50;
+    var legend = figure.append('g');
+    legend.append('rect')
+        .attr('class', 'legendColor')
+        .attr('width', legWidth)
+        .attr('height', legHeight)
+        .style('fill', '#fafafa')
+        .style('stroke', '#3c3c3c')
+        .style('opacity', 0.8)
+        .attr('transform', 'translate(' + margin.right + ',' + (-legHeight/2) + ')');
+    legend.append('text')
+      .attr('class', 'legendText')
+      .style('fill', '#5c5c5c')
+      .attr('text-anchor', 'start');
+
   },
 
 };
